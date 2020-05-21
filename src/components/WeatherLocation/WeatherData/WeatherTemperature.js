@@ -1,15 +1,15 @@
 import React from 'react';
-import { CLOUD, CLOUDY, SUN, RAIN, SNOW, WINDY } from './../../../constants/weather';
+import { CLOUD, SUN, RAIN, SNOW, DRIZZLE, THUNDER } from './../../../constants/weather';
 import PropTypes from 'prop-types';
 import './styles.css';
 
 const icons = {
     [CLOUD]: 'fas fa-cloud',
-    [CLOUDY]: 'fas fa-cloud',
+    [DRIZZLE]: 'fas fa-cloud',
     [SUN]: 'fas fa-sun',
     [RAIN]: 'fas fa-cloud-showers-heavy',
     [SNOW]: 'far fa-snowflake',
-    [WINDY]: 'fas fa-wind'
+    [THUNDER]: 'fas fa-wind'
 }
 
 const getWeatherIcon = state => {
