@@ -10,9 +10,14 @@ const cities = [
 ]
 
 function App() {
+
+    const handleSelectedLocation = city => {
+        console.log("->", city)
+    }
+
     return (
         <div className="App">
-            <LocationList cities={cities} />
+            <LocationList cities={cities} onSelectedLocation={handleSelectedLocation} />
         </div>
     );
 }
