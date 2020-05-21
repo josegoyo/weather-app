@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import getUrlWeatherByCity from './../../services/getUrlWeatherByCity';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -7,47 +7,33 @@ import WeatherData from './WeatherData';
 import transformWeather from './../../services/transformWeather';
 import './styles.css';
 
-class WeatherLocation extends Component {
+const WeatherLocation = (props) => {
 
-    constructor(props) {
-        super(props);
+    const [city, setCity] = useState(props.city)
+    const [data, setData] = useState(null);
 
-        const { city } = props;
+    useEffect(() => {
 
-        this.state = {
-            city,
-            data: null
-        }
-    }
+        handleUpdateClick();
 
-    componentDidMount() {
-        this.handleUpdateClick();
-    }
+    }, [city]);
 
-    componentDidUpdate(prevProps, prevState) {
-    }
-
-    handleUpdateClick = () => {
-        const api_weather = getUrlWeatherByCity(this.state.city)
+    const handleUpdateClick = () => {
+        const api_weather = getUrlWeatherByCity(city)
         fetch(api_weather).then((resolve) => {
             return resolve.json();
-        }).then(data => {
-            this.setState({
-                data: transformWeather(data)
-            })
+        }).then(info => {
+            setData(transformWeather(info))
         });
     }
 
-    render() {
-        const { onWeatherLocationClick } = this.props;
-        const { city, data } = this.state;
-        return (
-            <div className="weatherLocationCont" onClick={onWeatherLocationClick}>
-                <Location city={city} />
-                {data ? <WeatherData data={data} /> : <CircularProgress size={50} />}
-            </div>
-        )
-    }
+    return (
+        <div className="weatherLocationCont" onClick={props.onWeatherLocationClick}>
+            <Location city={city} />
+            {data ? <WeatherData data={data} /> : <CircularProgress size={50} />}
+        </div>
+    )
+
 };
 
 WeatherLocation.propTypes = {
